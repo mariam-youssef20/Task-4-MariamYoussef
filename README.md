@@ -118,7 +118,7 @@ digital-closet-project/
 ### Clone repository
 
 ```bash
-git clone https://github.com/yourusername/digital-closet.git
+git clone https://github.com/mariam-youssef20/Task-4-MariamYoussef
 ```
 
 Move into project:
