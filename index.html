@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Closet</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ========== AUTH SCREENS ========== -->
+  <div id="auth-screen" class="auth-screen">
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="auth-card">
+      <div class="auth-brand">
+        <span class="brand-icon">✦</span>
+        <h1 class="brand-name">Digital Closet</h1>
+        <p class="brand-tagline">Your wardrobe, curated.</p>
+      </div>
+      <form id="login-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email" />
+          <span class="field-error" id="login-email-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+          <span class="field-error" id="login-password-error"></span>
+        </div>
+        <div class="form-error" id="login-form-error"></div>
+        <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+      </form>
+      <p class="auth-switch">Don't have an account? <a href="#" id="go-to-signup">Create one</a></p>
+    </div>
+
+    <!-- Signup Screen -->
+    <div id="signup-screen" class="auth-card hidden">
+      <div class="auth-brand">
+        <span class="brand-icon">✦</span>
+        <h1 class="brand-name">Digital Closet</h1>
+        <p class="brand-tagline">Join the wardrobe revolution.</p>
+      </div>
+      <form id="signup-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="signup-username">Username</label>
+          <input type="text" id="signup-username" placeholder="fashionista" autocomplete="username" />
+          <span class="field-error" id="signup-username-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" placeholder="you@example.com" autocomplete="email" />
+          <span class="field-error" id="signup-email-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" placeholder="••••••••" autocomplete="new-password" />
+          <span class="field-error" id="signup-password-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="signup-confirm">Confirm Password</label>
+          <input type="password" id="signup-confirm" placeholder="••••••••" autocomplete="new-password" />
+          <span class="field-error" id="signup-confirm-error"></span>
+        </div>
+        <div class="form-error" id="signup-form-error"></div>
+        <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+      </form>
+      <p class="auth-switch">Already have an account? <a href="#" id="go-to-login">Sign in</a></p>
+    </div>
+
+  </div><!-- /auth-screen -->
+
+  <!-- ========== APP SHELL ========== -->
+  <div id="app" class="app hidden">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <span class="brand-icon">✦</span>
+        <span class="brand-name">Digital Closet</span>
+      </div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+        <li><a href="#" class="nav-link" data-page="add-item">Add Item</a></li>
+        <li><a href="#" class="nav-link" data-page="closet">My Closet</a></li>
+        <li><a href="#" class="nav-link" data-page="build-outfit">Build Outfit</a></li>
+        <li><a href="#" class="nav-link" data-page="outfit-generator">Outfit Generator</a></li>
+        <li><a href="#" class="nav-link" data-page="ai-tryon">AI Try-On</a></li>
+        <li><a href="#" class="nav-link" data-page="saved-outfits">Saved Outfits</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="dark-toggle" id="dark-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">
+          <span id="dark-icon">☽</span>
+        </button>
+        <div class="nav-user" id="nav-user-name"></div>
+        <button class="btn btn-ghost btn-sm" id="logout-btn">Logout</button>
+        <!-- Hamburger for mobile -->
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu overlay -->
+    <div class="mobile-menu hidden" id="mobile-menu">
+      <a href="#" class="mobile-nav-link" data-page="dashboard">Dashboard</a>
+      <a href="#" class="mobile-nav-link" data-page="add-item">Add Item</a>
+      <a href="#" class="mobile-nav-link" data-page="closet">My Closet</a>
+      <a href="#" class="mobile-nav-link" data-page="build-outfit">Build Outfit</a>
+      <a href="#" class="mobile-nav-link" data-page="outfit-generator">Outfit Generator</a>
+      <a href="#" class="mobile-nav-link" data-page="ai-tryon">AI Try-On</a>
+      <a href="#" class="mobile-nav-link" data-page="saved-outfits">Saved Outfits</a>
+      <a href="#" class="mobile-nav-link" id="mobile-logout">Logout</a>
+    </div>
+
+    <!-- ========== PAGES ========== -->
+    <main class="main-content">
+
+      <!-- Dashboard -->
+      <section id="page-dashboard" class="page active">
+        <div class="page-header">
+          <h2 class="page-title">Welcome back, <span id="dashboard-user-name"></span></h2>
+          <p class="page-subtitle">Here's what's in your wardrobe today.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👕</div>
+            <div class="stat-info">
+              <span class="stat-number" id="stat-total-clothes">0</span>
+              <span class="stat-label">Total Clothes</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✨</div>
+            <div class="stat-info">
+              <span class="stat-number" id="stat-total-outfits">0</span>
+              <span class="stat-label">Saved Outfits</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🧥</div>
+            <div class="stat-info">
+              <span class="stat-number" id="stat-tops">0</span>
+              <span class="stat-label">Tops</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">👖</div>
+            <div class="stat-info">
+              <span class="stat-number" id="stat-bottoms">0</span>
+              <span class="stat-label">Bottoms</span>
+            </div>
+          </div>
+        </div>
+        <div class="quick-actions">
+          <h3 class="section-title">Quick Actions</h3>
+          <div class="actions-grid">
+            <button class="action-card" data-page="add-item">
+              <span class="action-icon">＋</span>
+              <span class="action-label">Add Clothing</span>
+            </button>
+            <button class="action-card" data-page="closet">
+              <span class="action-icon">🗂</span>
+              <span class="action-label">Browse Closet</span>
+            </button>
+            <button class="action-card" data-page="outfit-generator">
+              <span class="action-icon">🎲</span>
+              <span class="action-label">Generate Outfit</span>
+            </button>
+            <button class="action-card" data-page="build-outfit">
+              <span class="action-icon">🪡</span>
+              <span class="action-label">Build Outfit</span>
+            </button>
+            <button class="action-card" data-page="ai-tryon">
+              <span class="action-icon">🤖</span>
+              <span class="action-label">AI Try-On</span>
+            </button>
+            <button class="action-card" data-page="saved-outfits">
+              <span class="action-icon">📌</span>
+              <span class="action-label">Saved Outfits</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- My Closet -->
+      <section id="page-closet" class="page hidden">
+        <div class="page-header">
+          <h2 class="page-title">My Closet</h2>
+          <p class="page-subtitle">All your clothing items in one place.</p>
+        </div>
+        <div class="closet-controls">
+          <div class="search-wrap">
+            <input type="text" id="search-input" class="search-input" placeholder="Search by name…" />
+            <span class="search-icon">⌕</span>
+          </div>
+          <div class="filter-chips" id="filter-chips">
+            <button class="chip active" data-filter="All">All</button>
+            <button class="chip" data-filter="Top">Tops</button>
+            <button class="chip" data-filter="Bottom">Bottoms</button>
+            <button class="chip" data-filter="Shoes">Shoes</button>
+            <button class="chip" data-filter="Jacket">Jackets</button>
+            <button class="chip" data-filter="Accessory">Accessories</button>
+          </div>
+        </div>
+        <div class="clothes-grid" id="clothes-grid">
+          <!-- Clothing cards rendered by JS -->
+        </div>
+        <div class="empty-state hidden" id="closet-empty">
+          <span class="empty-icon">🪞</span>
+          <p>Your closet is empty.</p>
+          <button class="btn btn-primary" data-page="add-item">Add your first item</button>
+        </div>
+      </section>
+
+      <!-- Add / Edit Item -->
+      <section id="page-add-item" class="page hidden">
+        <div class="page-header">
+          <h2 class="page-title" id="add-item-title">Add Clothing Item</h2>
+          <p class="page-subtitle">Fill in the details below to add a new piece.</p>
+        </div>
+        <div class="form-card">
+          <form id="clothing-form" novalidate>
+            <input type="hidden" id="edit-item-id" />
+            <div class="form-row">
+              <div class="form-group">
+                <label for="item-name">Clothing Name</label>
+                <input type="text" id="item-name" placeholder="e.g. White Linen Shirt" />
+                <span class="field-error" id="item-name-error"></span>
+              </div>
+              <div class="form-group">
+                <label for="item-color">Color</label>
+                <input type="text" id="item-color" placeholder="e.g. Ivory White" />
+                <span class="field-error" id="item-color-error"></span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="item-category">Category</label>
+                <select id="item-category">
+                  <option value="">Select category</option>
+                  <option value="Top">Top</option>
+                  <option value="Bottom">Bottom</option>
+                  <option value="Shoes">Shoes</option>
+                  <option value="Jacket">Jacket</option>
+                  <option value="Accessory">Accessory</option>
+                </select>
+                <span class="field-error" id="item-category-error"></span>
+              </div>
+              <div class="form-group">
+                <label for="item-season">Season</label>
+                <select id="item-season">
+                  <option value="">Select season</option>
+                  <option value="Summer">Summer</option>
+                  <option value="Winter">Winter</option>
+                  <option value="Spring">Spring</option>
+                  <option value="Autumn">Autumn</option>
+                  <option value="All">All Seasons</option>
+                </select>
+                <span class="field-error" id="item-season-error"></span>
+              </div>
+            </div>
+            <!-- CHANGE #1: File upload instead of URL -->
+            <div class="form-group">
+              <label for="item-image-file">Upload Image</label>
+              <div class="file-upload-wrap">
+                <input type="file" id="item-image-file" accept="image/*" class="file-input" />
+                <label for="item-image-file" class="file-upload-label">
+                  <span class="file-upload-icon">📷</span>
+                  <span class="file-upload-text">Choose an image…</span>
+                </label>
+              </div>
+              <span class="field-error" id="item-image-error"></span>
+            </div>
+            <div class="image-preview-wrap">
+              <img id="image-preview" class="image-preview hidden" src="" alt="Preview" />
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="save-item-btn">Save Item</button>
+              <button type="button" class="btn btn-ghost" id="cancel-edit-btn">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Build Your Own Outfit -->
+      <section id="page-build-outfit" class="page hidden">
+        <div class="page-header">
+          <h2 class="page-title">Build Your Own Outfit</h2>
+          <p class="page-subtitle">Handpick your perfect look from your wardrobe.</p>
+        </div>
+
+        <div id="build-outfit-content">
+          <!-- Steps rendered by JS -->
+        </div>
+
+        <!-- Outfit Preview (shown after selection) -->
+        <div id="build-outfit-preview" class="hidden">
+          <div class="outfit-preview-header">
+            <h3 class="section-title">Your Outfit</h3>
+          </div>
+          <div class="build-outfit-result" id="build-outfit-result">
+            <!-- Result cards rendered by JS -->
+          </div>
+          <div class="form-actions" style="margin-top:28px;">
+            <button class="btn btn-primary" id="save-built-outfit-btn">📌 Save Outfit</button>
+            <button class="btn btn-ghost" id="rebuild-outfit-btn">↩ Build Again</button>
+          </div>
+        </div>
+
+        <div class="empty-state hidden" id="build-outfit-empty">
+          <span class="empty-icon">🪡</span>
+          <p>Add at least one Top, one Bottom, and one pair of Shoes to build an outfit.</p>
+          <button class="btn btn-primary" data-page="add-item">Add clothes now</button>
+        </div>
+      </section>
+
+      <!-- Outfit Generator -->
+      <section id="page-outfit-generator" class="page hidden">
+        <div class="page-header">
+          <h2 class="page-title">Outfit Generator</h2>
+          <p class="page-subtitle">Let us put together your next look.</p>
+        </div>
+        <div class="generator-actions">
+          <button class="btn btn-primary" id="generate-btn">🎲 Generate Random Outfit</button>
+          <button class="btn btn-secondary" id="build-outfit-nav-btn">🪡 Build Your Own Outfit</button>
+          <button class="btn btn-ghost" id="ai-tryon-nav-btn">🤖 Try-On With AI</button>
+          <button class="btn btn-secondary hidden" id="save-outfit-btn">📌 Save Outfit</button>
+        </div>
+        <div class="outfit-display hidden" id="outfit-display">
+          <div class="outfit-cards" id="outfit-cards">
+            <!-- Generated outfit cards inserted by JS -->
+          </div>
+        </div>
+        <div class="empty-state hidden" id="generator-empty">
+          <span class="empty-icon">👗</span>
+          <p>You need at least one Top, one Bottom, and one pair of Shoes to generate an outfit.</p>
+          <button class="btn btn-primary" data-page="add-item">Add clothes now</button>
+        </div>
+      </section>
+
+      <!-- AI Virtual Try-On -->
+      <section id="page-ai-tryon" class="page hidden">
+        <div class="page-header">
+          <h2 class="page-title">AI Virtual Try-On</h2>
+          <p class="page-subtitle">See yourself in your outfits — powered by AI.</p>
+        </div>
+
+        <div class="ai-tryon-layout">
+          <!-- Step 1: Upload Photo -->
+          <div class="ai-step-card">
+            <div class="ai-step-number">01</div>
+            <h3 class="ai-step-title">Upload Your Photo</h3>
+            <p class="ai-step-desc">Choose a clear, front-facing photo of yourself.</p>
+            <div class="file-upload-wrap ai-photo-upload">
+              <input type="file" id="ai-photo-input" accept="image/*" class="file-input" />
+              <label for="ai-photo-input" class="file-upload-label ai-upload-label">
+                <span class="file-upload-icon" style="font-size:2.4rem">🤳</span>
+                <span class="file-upload-text">Choose Your Photo</span>
+                <span style="font-size:.78rem;color:var(--clr-text-muted);margin-top:4px;">JPG, PNG supported</span>
+              </label>
+            </div>
+            <div class="ai-photo-preview-wrap hidden" id="ai-photo-preview-wrap">
+              <img id="ai-photo-preview" class="ai-photo-preview" src="" alt="Your photo" />
+              <button class="btn btn-ghost btn-sm" id="ai-photo-clear">✕ Remove</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Select Outfit -->
+          <div class="ai-step-card">
+            <div class="ai-step-number">02</div>
+            <h3 class="ai-step-title">Select Outfit</h3>
+            <p class="ai-step-desc">Choose the items you'd like to try on.</p>
+
+            <div class="ai-outfit-selectors">
+              <div class="form-group">
+                <label for="ai-top-select">Top</label>
+                <select id="ai-top-select">
+                  <option value="">— Select a top —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="ai-bottom-select">Bottom</label>
+                <select id="ai-bottom-select">
+                  <option value="">— Select a bottom —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="ai-shoes-select">Shoes</label>
+                <select id="ai-shoes-select">
+                  <option value="">— Select shoes —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="ai-jacket-select">Jacket <span style="font-weight:400;font-style:italic">(optional)</span></label>
+                <select id="ai-jacket-select">
+                  <option value="">— No jacket —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Accessories <span style="font-weight:400;font-style:italic">(optional)</span></label>
+                <div class="ai-accessories-list" id="ai-accessories-list">
+                  <p class="ai-no-items">No accessories in your closet.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="ai-generate-wrap">
+          <button class="btn btn-primary ai-generate-btn" id="ai-generate-btn">
+            <span>✨</span> Generate AI Try-On
+          </button>
+        </div>
+
+        <!-- Result Area -->
+        <div class="ai-result hidden" id="ai-result">
+          <div class="ai-result-header">
+            <div class="ai-result-badge">✦ Generated Preview</div>
+          </div>
+          <div class="ai-result-mockup">
+            <div class="ai-mockup-placeholder">
+              <div class="ai-mockup-inner">
+                <span class="ai-mockup-icon">🤖</span>
+                <p class="ai-mockup-title">AI Try-On Coming Soon</p>
+                <p class="ai-mockup-msg">This feature will be powered by AI in Project 5.</p>
+              </div>
+            </div>
+          </div>
+          <div class="ai-result-items" id="ai-result-items"></div>
+        </div>
+      </section>
+
+      <!-- Saved Outfits -->
+      <section id="page-saved-outfits" class="page hidden">
+        <div class="page-header">
+          <h2 class="page-title">Saved Outfits</h2>
+          <p class="page-subtitle">Your curated looks, ready to wear.</p>
+        </div>
+        <div class="outfits-grid" id="outfits-grid">
+          <!-- Outfit cards rendered by JS -->
+        </div>
+        <div class="empty-state hidden" id="outfits-empty">
+          <span class="empty-icon">📌</span>
+          <p>No saved outfits yet.</p>
+          <button class="btn btn-primary" data-page="outfit-generator">Generate one</button>
+        </div>
+      </section>
+
+    </main><!-- /main-content -->
+  </div><!-- /app -->
+
+  <!-- Toast Notification -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
